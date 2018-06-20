@@ -35,7 +35,8 @@ function updateSection(section){
         _id: section.sectionId
     },{
         name: section.name,
-        seats: section.seats
+        seats: section.seats,
+        maxSeats: section.maxSeats
     });
 }
 

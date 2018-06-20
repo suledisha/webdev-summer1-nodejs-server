@@ -3,6 +3,7 @@ module.exports = function (app) {
     app.post('/api/course/:courseId/section', createSection);
     app.get('/api/course/:courseId/section', findSectionsForCourse);
     app.post('/api/section/:sectionId/enrollment', enrollStudentInSection);
+    app.delete('/api/section/:sectionId/unenrollment', unenrollStudentInSection);
     app.get('/api/student/section', findSectionsForStudent);
     app.delete('/api/section/:sectionId', deleteSection);
     app.put('/api/section/:sectionId', updateSection);
@@ -40,6 +41,24 @@ module.exports = function (app) {
             })
     }
 
+    function unenrollStudentInSection(req,res){
+        var sectionId = req.params.sectionId;
+        var currentUser = req.session.currentUser;
+        var studentId = currentUser._id;
+        var enrollment = {
+            student: studentId,
+            section: sectionId
+        };
+        sectionModel
+            .incrementSectionSeats(sectionId)
+            .then(function () {
+                return enrollmentModel
+                    .unenrollStudentInSection(enrollment)
+            }).then(function (enrollment) {
+            res.json(enrollment);
+        })
+    }
+
     function findSectionsForCourse(req, res) {
         var courseId = req.params['courseId'];
         sectionModel
@@ -62,6 +81,8 @@ module.exports = function (app) {
         var sectionId = req.params.sectionId;
         sectionModel
             .deleteSection(sectionId)
+            .then(function (){
+             enrollmentModel.deleteEnrollmentsForSection(sectionId)})
             .then(function (sections) {
                 res.json(sections);
             })
