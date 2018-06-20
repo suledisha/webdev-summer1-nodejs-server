@@ -18,8 +18,8 @@ function findSectionsForStudent(studentId) {
         .populate('section')
         .exec();
 }
-function deleteEnrollmentsForSection(sectionId){
-    return enrollmentModel.deleteMany({section: sectionId})
+function deleteEnrollmentsForSection(enrollment){
+    return enrollmentModel.deleteMany(enrollment)
 }
 
 module.exports = {
