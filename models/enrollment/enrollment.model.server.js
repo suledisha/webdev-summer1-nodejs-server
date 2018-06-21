@@ -19,7 +19,7 @@ function findSectionsForStudent(studentId) {
         .exec();
 }
 function deleteEnrollmentsForSection(enrollment){
-    return enrollmentModel.deleteMany(enrollment)
+    return enrollmentModel.remove(enrollment)
 }
 
 module.exports = {

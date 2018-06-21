@@ -39,6 +39,9 @@ function updateSection(section){
         maxSeats: section.maxSeats
     });
 }
+function findSectionById(sectionId){
+    return sectionModel.findById(sectionId);
+}
 
 module.exports = {
     createSection: createSection,
@@ -46,5 +49,6 @@ module.exports = {
     decrementSectionSeats: decrementSectionSeats,
     incrementSectionSeats: incrementSectionSeats,
     deleteSection: deleteSection,
-    updateSection: updateSection
+    updateSection: updateSection,
+    findSectionById: findSectionById
 };

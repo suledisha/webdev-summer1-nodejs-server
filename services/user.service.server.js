@@ -5,6 +5,7 @@ module.exports = function (app) {
     app.post('/api/user', createUser);
     app.get('/api/profile', profile);
     app.put('/api/profile', updateProfile);
+    app.delete('/api/profile', deleteProfile);
     app.post('/api/logout', logout);
     app.post('/api/login', login);
 
@@ -82,6 +83,10 @@ module.exports = function (app) {
                 req.session['currentUser']=user;
                 res.json(user);
             })
+    }
+    function deleteProfile(req,res){
+        req.session.destroy();
+        res.send(200);
     }
 
 }
